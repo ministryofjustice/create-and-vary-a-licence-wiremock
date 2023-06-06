@@ -2,13 +2,25 @@ version: 2.1
 
 orbs:
   hmpps: ministryofjustice/hmpps@6
+  mem: circleci/rememborb@0.0.2
   
+jobs:
+  create_app_version:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - mem/remember:
+          env_var: APP_VERSION
+          value: "latest"
+    
 workflows:
   version: 2
   build-test-and-deploy:
     jobs:
       - hmpps/helm_lint:
           name: helm_lint
+      - create_app_version:
+          name: store_app_version
       - hmpps/deploy_env:
           name: deploy_dev
           env: "dev"
@@ -19,3 +31,4 @@ workflows:
         #        - main
           requires:
             - helm_lint
+            - store_app_version
