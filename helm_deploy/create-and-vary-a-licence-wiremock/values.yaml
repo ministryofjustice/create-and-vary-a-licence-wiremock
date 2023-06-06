@@ -1,0 +1,69 @@
+---
+generic-service:
+  nameOverride: hmpps-community-api-wiremock
+  replicaCount: 2
+
+  image:
+    repository: quay.io/hmpps/hmpps-community-api-wiremock
+    tag: latest
+    pullPolicy: Always
+    port: 5000
+
+  ingress:
+    enabled: true
+    hosts: 
+     - app-hostname.local    # override per environment
+    tlsSecretName: create-and-vary-a-licence-wiremock-cert
+    v1_2_enabled: true
+    v0_47_enabled: false
+
+  livenessProbe:
+    httpGet:
+      path: /actuator/health/liveness
+    periodSeconds: 30
+    initialDelaySeconds: 60
+    timeoutSeconds: 20
+    failureThreshold: 10
+
+  readinessProbe:
+    httpGet:
+      path: /actuator/health/readiness
+    periodSeconds: 20
+    initialDelaySeconds: 60
+    timeoutSeconds: 30
+    failureThreshold: 15
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 640Mi
+    limits:
+      cpu: 2000m
+      memory: 2048Mi
+
+  env:
+    JAVA_OPTS: "-Xmx2048M"
+
+  namespace_secrets:
+    create-and-vary-a-licence:
+      SYSTEM_CLIENT_ID: "SYSTEM_CLIENT_ID"
+      SYSTEM_CLIENT_SECRET: "SYSTEM_CLIENT_SECRET"
+
+  allowlist:
+    office: "217.33.148.210/32"
+    petty_france_wifi: "213.121.161.112/28"
+    mojvpn: "81.134.202.29/32"
+    global-protect: "35.176.93.186/32"
+    health-kick: "35.177.252.195/32"
+    cloudplatform-live1-1: "35.178.209.113/32"
+    cloudplatform-live1-2: "3.8.51.207/32"
+    cloudplatform-live1-3: "35.177.252.54/32"
+
+  podSecurityContext:
+    fsGroup: 1001
+
+  securityContext:
+    runAsUser: 1001
+    runAsNonRoot: true
+
+

@@ -1,0 +1,14 @@
+---
+# Per environment values which override defaults in create-and-vary-a-licence/values.yaml
+
+generic-service:
+  replicaCount: 1
+
+  ingress:
+    hosts: 
+     - create-and-vary-a-licence-wiremock-dev.hmpps.service.justice.gov.uk
+    contextColour: green
+
+  env:
+    HMPPS_AUTH_URL: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth"
+    PRISONER_SEARCH_API_URL: "https://prisoner-offender-search-dev.prison.service.justice.gov.uk"
