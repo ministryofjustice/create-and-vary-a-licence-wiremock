@@ -45,7 +45,7 @@ generic-service:
     JAVA_OPTS: "-Xmx2048M"
 
   namespace_secrets:
-    create-and-vary-a-licence:
+    create-and-vary-a-licence-wiremock:
       SYSTEM_CLIENT_ID: "SYSTEM_CLIENT_ID"
       SYSTEM_CLIENT_SECRET: "SYSTEM_CLIENT_SECRET"
 
