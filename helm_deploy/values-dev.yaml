@@ -6,7 +6,7 @@ generic-service:
 
   ingress:
     hosts: 
-     - create-and-vary-a-licence-wiremock-dev.hmpps.service.justice.gov.uk
+     - cvl-probation-mock.hmpps.service.justice.gov.uk
     contextColour: green
 
   env:
