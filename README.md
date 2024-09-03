@@ -7,6 +7,10 @@ This service is hosted in the `create-and-vary-a-licence-api-dev` namespace and 
 
 # Deploy new versions
 
-To deploy a new version of this service either [trigger a new pipeline](https://app.circleci.com/pipelines/github/ministryofjustice/create-and-vary-a-licence-wiremock?branch=main), or create and merge a new PR to main. 
+To deploy a new version of this service delete the pod or scale the pods down to 0 and back up to 1. This will trigger pulling and deploying the latest version of the docker image. 
 
-Either mechanism should trigger deployment of the last produced docker image.   
+e.g:
+```
+kubectl -n create-and-vary-a-licence-api-dev \
+      delete pod create-and-vary-a-licence-wiremock-hmpps-community-api-<pod version here>
+```
